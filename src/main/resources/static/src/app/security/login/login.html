@@ -1,0 +1,15 @@
+<body>
+<div class="center">
+	<div>
+		Email <input type="text" [(ngModel)]="email" required /> Password <input type="password" [(ngModel)]="password" required/>
+		<button class="button2" (click)="signInWithEmailAndaPassword()">Login</button>
+		<p><b> or</b>
+		<h1 [routerLink]="['../../register']" class="header-nav-items">Sign In</h1>
+		<button   href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com" target="_blank"  (click)="signInWithFacebook()"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" width="30"  /></button>
+		<button   href="https://twitter.com/share?url=https://simplesharebuttons.com&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons" target="_blank" (click)="signInWithTwitter()"> <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" width="30" /></button>
+		<button  href="https://plus.google.com/share?url=https://simplesharebuttons.com" target="_blank" (click)="signInWithGoogle()"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" width="30"  /></button>
+	</div>
+</div>
+</body>
+
+

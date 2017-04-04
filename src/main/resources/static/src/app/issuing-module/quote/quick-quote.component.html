@@ -1,0 +1,63 @@
+<div class="mainBg page-wrapper">
+  <!-- Header -->
+  <header class="header-home">
+    <div class="left mobile-drop-main right m-show">
+      <a href="javascript:;" class="navbar-toggle">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+    </div>
+    <nav class="mobile-header-nav m-show">
+      <ul class="header-nav-ul clearfix">
+        <li>
+          <a href="javascript:;" class="header-nav-items">about</a>
+        </li>
+        <li>
+          <a href="javascript:;" class="header-nav-items">support</a>
+        </li>
+        <li>
+          <a (click)="showChat()" class="header-nav-items active">live chat</a>
+        </li>
+      </ul>
+    </nav>
+    <nav class="right header-home-nav">
+      <ul class="header-nav-ul2 clearfix">
+        <li>
+          <a href="javascript:;" class="header-nav-items">about</a>
+        </li>
+        <li>
+          <a href="javascript:;" class="header-nav-items">support</a>
+        </li>
+        <li>
+          <a (click)="showChat()" class="header-nav-items active"><span class="header-chat-icon2 right"></span>live chat</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="logo-box2">
+      <a href="javascript:;" class="logo-ezly-home"><b>ezly</b> insured</a>
+    </div>
+  </header>
+  <!-- End Header -->
+  <!-- Begin Main -->
+  <div class="main-page-content">
+    <div class="big-logo">
+      <img src="/assets/imgs/big-logo.png" width="345" height="47" />
+    </div>
+    <h4 class="text-center main-title">Tell us something about your business!</h4>
+    <div class="cont-form">
+       <div class="form-group1">
+	      <form>      
+	      	<dyna-field *ngFor="let vData of productVariableData?.masterVariableDataList" [field]="vData" (fieldChange)="vData.updateValue($event)"></dyna-field>
+	      </form>
+      </div>
+    </div> 
+    <!-- steps sliding -->
+    <div class="steps-wizard-sliding">
+      <a routerLink="/" class="steps-home-right"></a>
+      <a *ngIf="isValid()" (click)="quickQuote()" class="steps-home-left"></a>
+    </div>
+    <!-- End steps sliding -->
+  </div>
+  <!-- End Main -->
+</div>

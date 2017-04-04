@@ -1,0 +1,19 @@
+<div *ngIf="field?.visibleOP" class="group-home">
+  <input type="text" [ngModel]="field.textValue" (ngModelChange)="changeText($event)" required>
+  <label>{{field.placeholder}}</label>
+  <div *ngIf="field.isValid()" class="check"></div> <!-- icono de check -->
+</div>
+<div *ngIf="field?.visibleRB" style="display: inline-block; margin-top: 10px;" class="ui-g">
+	<h3>Not yet implemented...</h3>
+</div>
+<div *ngIf="field?.visibleCL" style="margin-top: 10px;">
+	<h3>Not yet implemented...</h3>
+</div>
+<div *ngIf="field?.visibleSL" class="group-home">      
+  <md-select  placeholder="{{field.placeholder}}" [ngModel]="selectedItem" (ngModelChange)="changeSingle($event)">
+    <md-option *ngFor="let item of field.selectItems" [value]="item.value">
+      {{ item.label }}
+    </md-option>
+  </md-select>
+  <div *ngIf="field.isValid()" class="check2"></div> <!-- icono de check -->
+</div>

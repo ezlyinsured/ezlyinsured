@@ -1,0 +1,92 @@
+/* Master Styles */
+
+.page-body {
+  background-color: white;
+  text-align: center;
+  height: 100%; 
+}
+
+
+.product-selector-section {
+  margin: auto;
+  text-align: center; 
+  width: 65%;
+  line-height: 35px;
+}
+
+.product-selector-controls {
+  margin: auto; 
+  width: 100%;
+  height:20px;
+  text-align: center;
+  background: linear-gradient(to bottom, #cbebff 9%,#cbebff 9%,#cbebff 30%,#f0f9ff 83%);
+  font-size:8px; 
+  color:black;
+}
+
+.product-selector-controls-nb {
+  margin: auto; 
+  width: 100%;
+  height:20px;
+  text-align: center;
+  background-color: white !important;
+  font-size:8px; 
+  color:black;
+}
+
+.product-selector-body {
+  background-color: white;
+  height: 100%; 
+}
+
+.product-selector-body {
+  background-color: white;
+  text-align: center;
+  height: 100%; 
+}
+
+.product-selector-questions {
+  background-color:white;
+  height: 100%;
+  width: 100%;
+}
+
+.go-back {
+  float: left;
+}
+
+.go-forward {
+  float: right;
+}
+
+.reset-arrow {
+  color: #d7181f;
+  font-size: 30px !important;
+  position: fixed; 
+  margin-top: 7px; 
+  left: 50%; 
+  margin-left: -20px;
+}
+
+.reset-text {
+  color: white;
+  text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
+  font-weight:bold;
+  font-size: 12px !important;
+  position: fixed;  
+  left: 50%; 
+  margin-left: -55px;
+}
+
+.rail-btn {
+  width: 120px;
+  margin-left: 30px;
+}
+
+.cl-group {
+	display: inline-block;
+}
+
+.cl-item {
+	text-align: left;
+}

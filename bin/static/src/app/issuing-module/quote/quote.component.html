@@ -1,0 +1,480 @@
+<div class="page-hider"></div>
+<!-- Begin structure aside -->
+<aside class="structure-aside left">
+	<div class="row mobile-nav-inner-position">
+		<!-- LOGO -->
+		<div class="logo-box">
+			<a href="javascript:;" class="logo-ezly"><b>ezly</b> insured</a>
+		</div>
+		<!-- Business -->
+		<div class="business-main-box clearfix">
+			<div class="left business-logo-main">
+				<span class="business-logo"></span> <span class="business-logo-txt">BUSINESS</span>
+			</div>
+			<div class="right business-text-details">
+				<p *ngFor="let vData of policy?.variableDataList"
+					class="business-txt-holder">{{vData.getText()}}</p>
+			</div>
+		</div>
+		<!-- structure level -->
+		<div class="structure-level-main">
+			<!-- structure Parent -->
+
+			<ul id="compositions-list" class="pure-tree main-tree">
+				<li class="pure-tree_link">Your Company</li>
+				<br />
+				<!-- Level 1 -->
+				<li><label (click)="onEditPolicyInfo()">Policy Information</label></li>
+				<li><label (click)="onEditPolicyCovs()">Policy Coverages</label></li>
+				<!-- Level 2 Risk iteration-->
+				<li>
+					<input type="checkbox" id="locations" (click)="onEditFirstLevelAllRisk()">
+					<label for="locations">Locations</label> <!-- Sub Level 2 -->
+					<ul class="pure-tree">
+						<li *ngFor="let risk of policy?.risks">
+							<span *ngIf="risk.childrenRisks.length > 0 "> 
+								<input type="checkbox" [id]="'riskn'+risk.id">
+								<label (click)="onEditFirstLevelRisk(risk)" [for]="'riskn'+risk.id">{{risk.name}}</label>
+								<ul class="pure-tree">
+									<li class="pure-tree_link" *ngFor="let riskchildren of risk.childrenRisks">
+										<label [id]="'riskc'+riskchildren.id" (click)="onEditSecondLevelRisk(riskchildren)" >{{riskchildren.name}}</label>
+									</li>
+								</ul>
+							</span> 
+							<span *ngIf="risk.childrenRisks.length==0" (click)="onEditFirstLevelRisk(risk)">
+								<label [id]="'riskn'+risk.id">{{risk.name}}</label>
+							</span>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="left-map-bg-image"></div>
+		<div class="left-aside-gradient-bg"></div>
+		<!-- expand collapse structure-level -->
+		<div class="expand-collapse-panel structure-level-expand">
+			<a href="javascript:;" class="expand-collapse-state"> <span
+				class="structure-lvl-icon left"></span> <span
+				class="expand-struct-txt">Hide sidebar</span>
+			</a>
+		</div>
+	</div>
+</aside>
+<!-- End structure aside -->
+<!-- Comparision Tables -->
+<aside class="comparison-table-aside right">
+	<div class="right-aside-bg"></div>
+	<div class="row comparison-table-aside-row">
+		<div class="comparison-aside-top">
+			<label class="comparison-table-lbl" (click)="callQuickQuote()">recommended</label>
+			<div class="comparison-detail-head clearfix">
+				<div class="right col-sm-6">
+					<label
+						*ngFor="let coverageGroup of covGroupPolicyLevel?.coveragesGroupList"
+						class="comparison-head-txt left col-sm-4">{{coverageGroup.name}}</label>
+				</div>
+			</div>
+		</div>
+		<div class="comparison-table-holder">
+			<!-- RECOMMENDED -->
+			<div class="comparison-table-list">
+				
+				<div *ngIf="searchingRecommended" class="comparison-box-main clearfix" style="height: 75px; ">
+					<md-progress-circle mode="indeterminate" style="height: 30px; width: 30px; margin: 0 auto;"></md-progress-circle>
+				</div>
+				
+				<div *ngIf="!searchingRecommended" class="comparison-box-main result clearfix">
+					<div class="left comparison-name-details col-xs-6">
+						<p class="comparison-company-name">{{bestPolicy?.policy.company.name}}</p>
+						<span class="comparison-amount-val">{{bestPolicy?.policy.premium.value}}<small>{{bestPolicy?.policy.premium.periodType}}</small></span>
+					</div>
+					<div class="right comparison-status col-xs-6">
+						<div *ngFor="let coverageGroupB of bestPolicy?.coveragesSummary"
+							class="left comparison-status-box col-xs-4">
+							<span [class]="calculatingScoreBar(coverageGroupB.percentageContracted)">
+							</span>
+						</div>
+					</div>
+					<a href="javascript:;" class="booked-comp-btn">BOOK NOW</a>
+				</div>
+			</div>
+			<!-- BEST OPTIONS -->
+			<div class="comparison-table-list comparison-best-list">
+				<label class="comparison-table-lbl">BEST OPTIONS</label>
+				<div class="comparison-whole-box">
+					<div *ngFor="let quote of policies"
+						class="comparison-box-main result clearfix">
+						<div class="left comparison-name-details col-xs-6">
+							<p class="comparison-company-name">{{quote.policy.company.name}}</p>
+							<span class="comparison-amount-val">{{quote.policy.premium.value}}<small>{{quote.policy.premium.periodType}}</small></span>
+						</div>
+						<div class="right comparison-status col-xs-6">
+							<div *ngFor="let coverageGroup of quote.coveragesSummary"
+								class="left comparison-status-box col-xs-4">
+								<span [class]="calculatingScoreBar(coverageGroup.percentageContracted)">
+							</span>
+							</div>
+						</div>
+						<a href="javascript:;" class="booked-comp-btn">BOOK NOW</a>
+					</div>
+					<div *ngIf="searchingResults" class="comparison-box-main clearfix" style="height: 75px; ">
+						<md-progress-circle mode="indeterminate" style="height: 30px; width: 30px; margin: 0 auto;"></md-progress-circle>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- expand collapse comparison-table -->
+	<div class="expand-collapse-panel comparison-table-expand">
+		<a href="javascript:;"
+			class="expand-collapse-state aside-table-expand-txt"> <span
+			class="comparison-exco-icon left"></span> <span
+			class="expand-compa-txt">Expand comparison table</span>
+		</a> <a href="javascript:;"
+			class="expand-collapse-state aside-table-collapse-txt"> <span
+			class="expand-compa-txt left">Collapse comparison table</span> <span
+			class="comparison-exco-icon left"></span>
+		</a>
+	</div>
+</aside>
+<!-- End Comparision Tables -->
+<div class="page-wrapper">
+	<!-- Header -->
+	<header class="header ">
+		<a href="javascript:;" class="menu-icon left"> <span class="line"></span>
+			<span class="line"></span> <span class="line"></span>
+		</a> <a href="javascript:;" class="notify-icon right"> <span
+			class="line"></span> <span class="line"></span> <span class="line"></span>
+		</a>
+		<div class="left mobile-drop-main right m-show">
+			<a href="javascript:;" class="navbar-toggle"> <span
+				class="icon-bar"></span> <span class="icon-bar"></span> <span
+				class="icon-bar"></span>
+			</a>
+		</div>
+		<nav class="mobile-header-nav m-show">
+			<ul class="header-nav-ul clearfix">
+				<li><a href="javascript:;" class="header-nav-items">about</a></li>
+				<li><a href="javascript:;" class="header-nav-items">support</a>
+				</li>
+				<li><a (click)="showChat()" class="header-nav-items active">live
+						chat</a></li>
+			</ul>
+		</nav>
+		<nav class="right header-nav">
+			<ul class="header-nav-ul clearfix">
+				<li><a href="javascript:;" class="header-nav-items">about</a></li>
+				<li><a href="javascript:;" class="header-nav-items">support</a>
+				</li>
+				<li><a (click)="showChat()" class="header-nav-items active"><span
+						class="header-chat-icon right"></span>live chat</a></li>
+			</ul>
+		</nav>
+		<div class="logo-box expanded-logo">
+			<a href="javascript:;" class="logo-ezly"><b>ezly</b> insured</a>
+		</div>
+	</header>
+	<!-- End Header -->
+	<!-- Begin Main -->
+	<main class="mains">
+	<div class="row clearfix">
+		<div class="steps-wizard-box">			
+			<md-card>
+				<ng-container *ngIf="timerStarted && subject=='client'">
+					<md-icon>schedule</md-icon>
+					<span>Your changes be applied in {{timeLeftChanges}} seconds</span><br /><br />
+					<button (click)="applyChangesNow('client');" class="btn btn-primary">Apply Now!</button>
+				</ng-container>
+				<ng-container *ngIf="timerStarted && subject=='agent'">
+					<md-icon>schedule</md-icon>
+					<span>Agent has changed the quote {{timeLeftChanges}} seconds</span><br /><br />
+		    	</ng-container>
+				<ng-container *ngIf="!timerStarted">
+					<md-icon>check_circle</md-icon>
+					<span>No pending changes.</span>
+				</ng-container>
+			</md-card>
+			<br/>
+			<!-- Policy Coverages -->
+			<div *ngIf="currentVisible == 'policyInfo'">
+			
+				<div class="panel-group" id="accordionPI" role="tablist" aria-multiselectable="false">
+					
+				  <div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="riskCoveragesHeader">
+				      <div class="panel-title" data-target="#policyInfo" data-toggle="collapse" data-parent="#accordionPI" aria-expanded="true" style="cursor:pointer">
+				          Policy Information <a class="help-icon-steps" data-toggle="modal" data-toggle="modal" (click)="openHelp(null, null); $event.stopPropagation()"></a>
+				      </div>
+				    </div>
+				    <div id="policyInfo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="policyInfoHeader">
+				      <div class="panel-body">
+				      
+						<template ngFor let-vData  [ngForOf]="policy?.variableDataList" >
+							<div class="form-group2">
+								<div *ngIf="vData.visibleOP" >
+									<md-input-container>
+										<input mdInput [placeholder]="vData.label" 
+											[ngModel]="vData.value" (ngModelChange)="onChangeVariableData(vData, $event)" required/>
+									</md-input-container>
+								</div>
+								
+								<div *ngIf="vData.visibleRB">
+									<h3>RB not yet implemented...</h3>
+								</div>
+								
+								<div *ngIf="vData.visibleCL">
+									<h3>CL not yet implemented...</h3>
+								</div>
+								
+								<div *ngIf="vData.visibleSL">
+								  	<md-select  [placeholder]="vData.label" 
+								  		[ngModel]="vData.value" (ngModelChange)="onChangeVariableData(vData, $event)">
+									    <md-option *ngFor="let option of vData.optionList" [value]="option.code">
+									      {{ option.description }}
+									    </md-option>
+									  </md-select>
+									<!--div *ngIf="field.isValid()" class="check2"></div> <!-- icono de check -->
+								</div>
+							</div>
+						</template>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			
+			<!-- Policy Coverages -->
+			<div *ngIf="currentVisible == 'policyCov'"
+				class="steps-wizard-content">
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">	  
+					
+					<div *ngFor="let coverageGroup of policy?.coveragesGroups;">
+						<ng-container *ngIf="coverageGroup.real">
+						  <div class="panel panel-default">
+						    <div class="panel-heading" role="tab" id="coverageHeader">
+						      <h4 class="panel-title" [attr.data-target]="'#collapse'+ coverageGroup.code" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" style="cursor:pointer">
+						          {{coverageGroup.name}} 
+						          <a class="help-icon-steps" data-toggle="modal" (click)="openHelp(); $event.stopPropagation()"></a>
+						      </h4>
+						    </div>
+						    <div [id]="'collapse'+ coverageGroup.code" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="coverageHeader">
+						      <div class="panel-body">
+						      
+						      	<p>Please select you policy coverages?</p>
+								<br /> <br />
+						       	<!-- List of coverages -->
+								<div>
+									<ul class="list-of-coverages-ul">
+										<li *ngFor="let coverage of coverageGroup.coverages">
+											<label class="chk-box">
+												<input type="checkbox" [disabled]="coverage.required" [ngModel]="coverage.contracted" (ngModelChange)="onChangeCoverage(coverage)">
+												<span></span>
+												<i class="chk-box-txt">{{coverage.masterCoverage.name}}</i>
+											</label>
+										</li>
+									</ul>
+				
+									<br /> <br />
+								</div>
+						      </div>
+						    </div>
+						  </div>
+						</ng-container>
+					 </div>		
+				</div>
+				<!-- End List of coverages -->
+			</div>
+
+			<!-- Risks level 1 -->
+			<div *ngIf="currentVisible == 'firstLevelAllRisk'" class="steps-wizard-content">
+			
+				<div class="panel-group" id="accordionFLAR" role="tablist" aria-multiselectable="false">
+					
+				  <div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="accordionFLARHeader">
+				      <div class="panel-title" data-target="#allRisks" data-toggle="collapse" data-parent="#accordionFLAR" aria-expanded="true" style="cursor:pointer">
+				          Locations <a class="help-icon-steps" data-toggle="modal" (click)="openHelp(); $event.stopPropagation()"></a>
+				      </div>
+				    </div>
+				    <div id="allRisks" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="accordionFLARHeader">
+				      <div class="panel-body">
+				      
+				      	<br/>
+						<md-select placeholder="Select coverage" [(ngModel)]="selectedCov" style="width: 200px"> 
+							<md-option *ngFor="let riskCoverage of covGroupRiskLevel.coveragesGroupList[0].coverages" [value]="riskCoverage.masterCoverage.code">
+								{{riskCoverage.masterCoverage.name}} 
+							</md-option>
+						</md-select>
+						<br/> <br/>
+						<ul class="list-of-coverages-ul">
+							<li *ngFor="let risk of policy.risks">
+								<label class="chk-box">
+									<ng-container  *ngFor="let coverage of risk.coverages"> 
+										<input *ngIf="selectedCov == coverage.masterCoverage.code" type="checkbox" 
+											[disabled]="coverage.required" [ngModel]="coverage.contracted" (ngModelChange)="onChangeCoverage(coverage)" />
+									</ng-container>
+									<span></span> 
+									<i class="chk-box-txt">{{risk.name}}</i>
+								</label>
+								<button md-icon-button [mdMenuTriggerFor]="menu">
+									<md-icon>more_vert</md-icon>
+								</button>
+								<md-menu #menu="mdMenu">
+								  <button md-menu-item (click)="callFirstRiskLvlDialog('edit', risk)">
+								    <md-icon>mode_edit</md-icon>
+								    <span>Edit</span>
+								  </button>
+								  <button md-menu-item (click)="callFirstRiskLvlDialog('remove', risk)">
+								    <md-icon>delete</md-icon>
+								    <span>Delete</span>
+								  </button>
+								</md-menu>
+							</li>
+						</ul>
+						<br/> <br/>
+						<button md-raised-button (click)="callFirstRiskLvlDialog('create')">Add Location</button>
+						
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				
+			</div>
+
+			<!-- First level risk selection -->
+			<div *ngIf="currentVisible == 'firstLevelRiskSelection'" class="steps-wizard-content">
+			
+				<div class="panel-group" id="accordionFLRS" role="tablist" aria-multiselectable="true">
+					
+				  <div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="riskCoveragesHeader">
+				      <div class="panel-title" data-target="#riskCoverages" data-toggle="collapse" data-parent="#accordionFLRS" aria-expanded="true" style="cursor:pointer">
+				          Coverages <a class="help-icon-steps" data-toggle="modal" (click)="openHelp(); $event.stopPropagation()"></a>
+				      </div>
+				    </div>
+				    <div id="riskCoverages" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="riskCoveragesHeader">
+				      <div class="panel-body">
+				      
+				      	<p>Please select coverages for this location:</p>
+						<br /> <br />
+						<ul class="list-of-coverages-ul">
+							<li *ngFor="let cov of currentRisk.coverages">
+								<label class="chk-box"> 
+									<input type="checkbox" [disabled]="cov.required" [ngModel]="cov.contracted" (ngModelChange)="onChangeCoverage(cov)" />
+									<span></span> 
+									<i class="chk-box-txt">{{cov.masterCoverage.name}}</i>
+								</label>
+							</li>
+						</ul>
+				      </div>
+				    </div>
+				  </div>	
+				
+				
+				<div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="childrenRiskHeader">
+				      <div class="panel-title" data-target="#childrenRisk" data-toggle="collapse" data-parent="#accordionFLRS" aria-expanded="true" style="cursor:pointer">
+				          Buildings <a class="help-icon-steps" data-toggle="modal" (click)="openHelp(); $event.stopPropagation()"></a>
+				      </div>
+				    </div>
+				    <div id="childrenRisk" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="childrenRiskHeader">
+				      <div class="panel-body">
+				      	<br/>
+				      	<md-select placeholder="Select coverage" [(ngModel)]="selectedChildRiskCov" style="width: 200px">
+				      		<md-option *ngFor="let childRiskCoverage of covGroupRiskLevel.coveragesGroupList[1].coverages" [value]="childRiskCoverage.masterCoverage.code">
+								{{childRiskCoverage.masterCoverage.name}} 
+							</md-option>
+				      	</md-select>
+				      	
+				      	<br/><br/>
+						
+						<ul class="list-of-coverages-ul">
+							<li *ngFor="let childRisk of currentRisk.childrenRisks">
+								<label class="chk-box"> 
+									<ng-container *ngFor="let childRiskCov of childRisk.coverages">
+										<input *ngIf="selectedChildRiskCov == childRiskCov.masterCoverage.code" type="checkbox" 
+											[disabled]="childRiskCov.required" [ngModel]="childRiskCov.contracted" (ngModelChange)="onChangeCoverage(childRiskCov)" /> 
+									</ng-container>
+									<span></span>
+									<i class="chk-box-txt">{{childRisk.name}}</i>
+								</label>
+								<button md-icon-button [mdMenuTriggerFor]="menu">
+									<md-icon>more_vert</md-icon>
+								</button>
+								<md-menu #menu="mdMenu">
+								  <button md-menu-item (click)="callSecondRiskLvlDialog('edit',currentRisk,childRisk)">
+								    <md-icon>mode_edit</md-icon>
+								    <span>Edit</span>
+								  </button>
+								  <button md-menu-item (click)="callSecondRiskLvlDialog('remove',currentRisk,childRisk)">
+								    <md-icon>delete</md-icon>
+								    <span>Delete</span>
+								  </button>
+								</md-menu>
+							</li>
+						</ul>
+						<br />
+						<br />
+						<button md-raised-button (click)="callSecondRiskLvlDialog('create',currentRisk)">Add building</button>
+				      </div>
+				    </div>
+				  </div>
+				
+				</div>
+			</div>
+
+			<!-- Second level risk selection -->
+			<div *ngIf="currentVisible == 'secondLevelRiskSelection'" class="steps-wizard-content">
+			
+				<div class="panel-group" id="accordionSLRS" role="tablist" aria-multiselectable="false">
+					
+				  <div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="secondLevelRiskCoveragesHeader">
+				      <div class="panel-title" data-target="#secondLevelRiskCoverages" data-toggle="collapse" data-parent="#accordionSLRS" aria-expanded="true" style="cursor:pointer">
+				          Coverages <a class="help-icon-steps" data-toggle="modal" (click)="openHelp(); $event.stopPropagation()"></a>
+				      </div>
+				    </div>
+				    <div id="secondLevelRiskCoverages" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="secondLevelRiskCoveragesHeader">
+				      <div class="panel-body">
+				      
+				      	<p>Select coverages for this building:</p>
+						<br /> <br />
+						<ul class="list-of-coverages-ul">
+							<li *ngFor="let secondLevelRiskcov of currentRisk.coverages">
+								<label class="chk-box"> 
+									<input type="checkbox" [disabled]="secondLevelRiskcov.required" [ngModel]="secondLevelRiskcov.contracted" (ngModelChange)="onChangeCoverage(secondLevelRiskcov)" />
+									<span></span> 
+									<i class="chk-box-txt">{{secondLevelRiskcov.masterCoverage.name}}</i>
+								</label>
+							</li>
+						</ul>
+				      </div>
+				    </div>
+				  </div>	
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	</main>
+	<!-- End Main -->
+	<!-- Help modal -->
+    <div class="modal fade modal-ezly" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Policy Coverages</h4>
+          </div>
+          <div class="modal-body">
+            <dl>
+              <dt>Equipment Breakdown</dt>
+              <dd>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</dd>
+
+              <dt>Data Compromise</dt>
+              <dd>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>

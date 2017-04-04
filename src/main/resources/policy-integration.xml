@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:int-amqp="http://www.springframework.org/schema/integration/amqp"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-4.3.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http-4.3.xsd
+		http://www.springframework.org/schema/integration/amqp http://www.springframework.org/schema/integration/amqp/spring-integration-amqp-4.3.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.6.xsd">
+	<int:channel id="policyNHChannel" datatype="java.lang.String"></int:channel>
+	<int:channel id="policyHChannel" datatype="java.lang.String">
+	</int:channel>
+	<int:channel id="policyResponseReply" datatype="java.lang.String">
+		<int:interceptors>
+			<int:wire-tap channel="loggingChannel" />
+		</int:interceptors>
+	</int:channel>
+	<int:channel id="policyResponseReturn" datatype="java.lang.String">
+	</int:channel>
+
+
+	<int:logging-channel-adapter id="loggingChannel"
+		log-full-message="true" level="INFO" />
+
+	<int-http:inbound-gateway id="policyInboundGateway"
+		reply-channel="policyResponseReturn" request-channel="policyNHChannel"
+		mapped-request-headers="*" path="/processQuickQuoteInt"
+		mapped-response-headers="*" supported-methods="POST"
+		request-payload-type="java.lang.String">
+		<int-http:cross-origin origin="*"
+			allowed-headers="*" method="POST" />
+	</int-http:inbound-gateway>
+
+	<int:header-enricher input-channel="policyNHChannel"
+		output-channel="policyHChannel" ref="policyHeaderService" method="addPolicyHeader">
+	</int:header-enricher>
+
+	<!-- <int:service-activator ref="simpleEchoResponder" method="issueResponseFor" 
+		input-channel="policyHChannel" output-channel="policyHChannel"></int:service-activator> -->
+
+	<!--<int:router id="policyRouter" input-channel="policyHChannel" ref="policyQueueRoutingService" 
+		method="routePolicyOperationProduct"></int:router> -->
+	<int-amqp:outbound-async-gateway 
+		async-template="asyncTemplate" request-channel="policyHChannel" reply-timeout="-1"
+		return-channel="policyResponseReturn" reply-channel="policyResponseReply" 
+		exchange-name="policy-exchange" routing-key-expression="headers['bindingkey']"
+		mapped-request-headers="*" mapped-reply-headers="*">
+	</int-amqp:outbound-async-gateway>
+
+	<int:service-activator ref="simpleEchoResponder"
+		method="issueResponseFor" input-channel="policyResponseReply"
+		output-channel="policyResponseReturn"></int:service-activator>
+
+	<!-- RabbitMQ Configuration -->
+
+	<rabbit:direct-exchange id="policyExchange"
+		name="policy-exchange" auto-declare="true">
+		<rabbit:bindings>
+			<rabbit:binding key="QUOTE_BOP8011" queue="QUOTE_BOP8011" />
+			<rabbit:binding key="QUOTE_BOP8012" queue="QUOTE_BOP8012" />
+			<rabbit:binding key="QUOTE_BOP8013" queue="QUOTE_BOP8013" />
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+
+
+</beans>

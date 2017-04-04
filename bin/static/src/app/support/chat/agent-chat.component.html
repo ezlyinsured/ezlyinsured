@@ -1,0 +1,32 @@
+<div  class="container-chat">
+    <div class="chat" style="width: 580px;">
+        <div class="title-chat">Active Users
+       	<span>&nbsp;&nbsp;</span>
+       	<a *ngIf="!visible"(click)="expand()" style="float: right;">[+]</a>
+       	<a *ngIf="visible" (click)="colapse()" style="float: right;">[-]</a></div>
+        
+        <md-grid-list *ngIf="visible" cols="2" rowHeight="300px">
+	        <md-grid-tile style="overflow-y: scroll; margin-top:5px;">
+	        	<md-list>
+				  <md-list-item *ngFor="let user of activeUsers">
+				    <button (click)="startChat(user)" md-mini-fab><md-icon>chat</md-icon></button>
+				    <button *ngIf="user.quoteId" (click)="goToSupport(user)" md-mini-fab><md-icon>cast</md-icon></button>
+				    <p md-line>Name: {{user.name}}</p>
+				    <p md-line>Email: {{user.email}}</p>
+				    <p md-line>Quoting: {{user.quoteId ? 'Yes' : 'No'}}</p>
+				  </md-list-item>
+				</md-list>        
+	        </md-grid-tile>
+	        <md-grid-tile style="overflow-y: scroll; margin-top:5px;" >
+		        <div class="text-chat">
+		            <div *ngIf="selectedUser">System: Soon one of our agents will help you.</div>
+		            <div *ngFor="let msg of chat.messages" style="margin-top: 5px;">{{msg}}</div>
+		        </div>
+		    </md-grid-tile>
+	    </md-grid-list>
+	    
+        <div *ngIf="visible">
+            <input #chatBox type="text" (keyup.enter)="addMessage(chatBox.value); chatBox.value = '';" placeholder="Type your message here..."  style="width: 100%"/>
+        </div>
+    </div>
+</div>

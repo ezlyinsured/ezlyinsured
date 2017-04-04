@@ -1,0 +1,85 @@
+<div style="width: 800px; margin: auto;" class="product-selector-body">	
+	<!-- back and forward controls -->
+	<div [ngClass]="{'product-selector-controls-nb': !railVisible, 'product-selector-controls': railVisible}">
+		<a class="go-back" *ngIf="!startVisible" (click)="goBack()"><<</a>
+		<a class="go-forward" *ngIf="forwardStack.length > 0 || forwardStackSections.length > 0" (click)="goForward()">>></a>
+		<a style="color: black" *ngIf="railVisible" (click)="resetProductSelector()"><span class="fa ui-icon-arrow-drop-down reset-arrow"></span></a>
+		<a style="color: black" *ngIf="railVisible" (click)="resetProductSelector()"><span class="reset-text">Go back to BOP plans</span></a>
+	</div>
+	<div id="start" *ngIf="startVisible" class="product-selector-section">
+		<h1>{{productSelector?.startPage.titleText}}</h1>
+		<br /> <br />
+		<button (click)="goToQuote()" type="button" class="red-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+			<span class="ui-button-text ui-c">{{productSelector?.startPage.startButtonText}}</span>
+			<span class="ink animate"></span>
+		</button>
+		<br /> <br />
+		<br /> <br /> 
+		<a style="color: black" (click)="goToRail()">{{productSelector?.startPage.notShureText}}</a>
+	</div>
+	<!-- questions rail section -->
+	<div id="rail" *ngIf="railVisible"
+		class="product-selector-section">
+		<h1>{{currentQuestion?.titleText}}</h1>
+		<br /> <br />
+		<h2>{{currentQuestion?.questionText}}</h2>
+		<br /> <br /> <br />
+		<button (click)="answerYesToQuestion()" type="button" class="blue-grey-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only rail-btn">
+			<span class="ui-button-text ui-c">{{productSelector?.questionRail.yesText}}</span>
+			<span class="ink animate"></span>
+		</button>
+		<button (click)="answerNoToQuestion()" type="button" class="blue-grey-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only rail-btn" >
+			<span class="ui-button-text ui-c">{{productSelector?.questionRail.noText}}</span>
+			<span class="ink animate"></span>
+		</button>
+		<button (click)="answerIdkToQuestion()" type="button" class="blue-grey-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only rail-btn">
+			<span class="ui-button-text ui-c">{{productSelector?.questionRail.idkText}}</span>
+			<span class="ink animate"></span>
+		</button>
+	</div>
+	<!-- confirmation of product section -->
+	<div id="positiveEnd" *ngIf="positiveEndVisible"
+		class="product-selector-section">
+		<h1>{{productSelector?.positiveEndPage.titleText}}</h1>
+		<br /> <br />
+		<button (click)="goToQuote()" type="button" class="red-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+			<span class="ui-button-text ui-c">{{productSelector?.positiveEndPage.letsGoButtonText}}</span>
+			<span class="ink animate"></span>
+		</button>
+		<br /> <br />
+		<br /> <br /> 
+		<a style="color: black" (click)="goToEmailNotify()">{{productSelector?.negativeEndPage.noThanksText}}</a>
+	</div>
+	<!-- negative end section -->
+	<div id="negativeEnd" *ngIf="negativeEndVisible"
+		class="product-selector-section">
+		<h1>{{productSelector?.negativeEndPage.titleText}}</h1>
+		<h2>{{productSelector?.negativeEndPage.goAnywayText}}</h2>
+		<br /> <br />
+		<button (click)="goToQuote()" type="button" class="red-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+			<span class="ui-button-text ui-c">{{productSelector?.negativeEndPage.whyNotButtonText}}</span>
+			<span class="ink animate"></span>
+		</button>
+		<br /> <br />
+		<br /> <br /> 
+		<a style="color: black" (click)="goToEmailNotify()">{{productSelector?.negativeEndPage.noThanksText}}</a>
+	</div>
+	<!-- email section -->
+	<div id="emailNotify" *ngIf="emailNotifyVisible"
+		class="product-selector-section">
+		<h1>{{productSelector?.emailPage.titleText}}</h1>
+		<h2>{{productSelector?.emailPage.offerNotifyText}}</h2>
+		<br /> <br /> 
+		<div style="display: inline-block;" class="ui-md-4">
+            <span class="md-inputfield">
+                <input pinputtext="" type="text" class="ui-inputtext ui-corner-all ui-state-default ui-widget">
+                <label>email address</label>
+            </span>
+        </div> 
+		<br /> <br /> <br />
+		<button (click)="subscribeUserToNews()" type="button" class="red-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+			<span class="ui-button-text ui-c">OK</span>
+			<span class="ink animate"></span>
+		</button>
+	</div>
+</div>

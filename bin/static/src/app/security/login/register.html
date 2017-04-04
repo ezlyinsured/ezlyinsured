@@ -1,0 +1,20 @@
+ <body>
+ <div>
+      <div>
+            First name <input type="text" [(ngModel)]="user.firstName" required />
+            {{firstName}}
+            Last name  <input type="text" [(ngModel)]="user.lastName" required />
+            Password   <input type="password"  [(ngModel)]="password" required />
+            Password Verify <input type="password" [(ngModel)]="password_vrf" required />
+      </div>
+
+      <div class="usd" >
+            Email <input  [(ngModel)]="email"required />
+            Email Verify <input  [(ngModel)]="email_vrf" required />
+            
+            ZipCode <input [(ngModel)]="zipcode" required >
+      </div>
+      <input type="file" />
+      <button class="button2" type="submit" class="btn btn-default" (click)="CrtUser()">Submit</button>
+ </div>
+ </body>

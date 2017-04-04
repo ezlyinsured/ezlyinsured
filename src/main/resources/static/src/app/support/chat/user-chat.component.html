@@ -1,0 +1,20 @@
+<div *ngIf="visible" class="container-chat">
+    <div class="chat">
+        <div class="title-chat">Help - We are online <a (click)="hide()" style="float: right;">[X]</a></div>
+        <div *ngIf="activeChat && user" class="text-chat">
+            <div>Hi {{user.name}}, soon one of our agents will help you.</div>
+            <div *ngFor="let msg of chat.messages">{{msg}}</div>
+            <div *ngIf="chat.requestRemoteAssist">Do you want remote assistance? <button (click)="confirmRemoteAssistence()" >Yes</button></div>
+        </div>
+        <div *ngIf="!activeChat && user" class="text-chat">
+            <input type="text" placeholder="Type your name" [(ngModel)]="user.name" />
+            <br/> <br/>
+            <input type="text" placeholder="Type your email" [(ngModel)]="user.email"/>
+            <br/> <br/>
+            <button (click) = "startChat()">Start</button>
+        </div>
+        <div *ngIf="activeChat">
+            <input #chatBox type="text" (keyup.enter)="addMessage(chatBox.value); chatBox.value = '';" placeholder="Type your message here..."  style="width: 100%"/>
+        </div>
+    </div>
+</div>

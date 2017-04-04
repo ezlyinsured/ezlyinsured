@@ -1,0 +1,23 @@
+{
+    "TITLE": "Angular 2 Localizacion",
+    "CHANGE_COUNTRY": "Cambiar Pais",
+    "policy":{
+    	"labels":{
+    		"lbl": "lbl1"
+    	},
+    	"errors":{
+    		"err1": "err"
+    	},
+    	"actions":{
+    		"quick_quote_btn": "COTIZACION RAPIDA"
+    	}
+    },
+    "common":{
+    	"labels":{
+    		"111": "lbl"
+    	},
+    	"errors":{
+    		"err2": "err2"
+    	}
+    }
+}

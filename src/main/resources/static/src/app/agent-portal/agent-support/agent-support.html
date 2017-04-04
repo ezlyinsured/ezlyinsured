@@ -1,0 +1,11 @@
+<div>
+   <!-- <router-outlet></router-outlet> --> 
+    
+    <div *ngIf="chat?.confirmRemoteAssist && policy!=null" >
+    	<quote-assistance></quote-assistance>
+    </div>
+    <div *ngIf="!chat?.confirmRemoteAssist" style="text-align:center;">
+    	<h1>Waiting for client confirmation to start the remote assistance.</h1> 
+    </div>
+    
+</div>

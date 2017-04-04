@@ -1,0 +1,28 @@
+<div style="height:100%">
+    <div class="mainHeaderAgentPortal">
+        <div class="headerMenu">
+            <i class="material-icons" style="color:white;">&#xE8FE;</i>
+        </div>
+        <div class="headerLogo">
+            <img src="/assets/imgs/big-logo-agent.png" width="220" height="30">
+        </div>
+        <div class="userInfo">
+            <img [src]="userPhoto" class="imageOnCircle"/>
+            <div class="userDetail">
+                <div class="userName">{{userName}}</div>
+                <div class="userLogout" (click)="logout()">Logout</div>
+            </div>
+        </div>
+    </div>
+    <div style="height: 100%;width: 100%;">
+        <div class="mainDiv">
+            <div class="divMap">
+                <sebm-google-map [latitude]="lat" [longitude]="lng">
+                    <sebm-google-map-marker [latitude]="lat" [longitude]="lng" [iconUrl]="yourIconUrl"></sebm-google-map-marker>
+                    <sebm-google-map-marker *ngFor="let point of points" [latitude]="point.lat" [longitude]="point.lng" ></sebm-google-map-marker>
+                </sebm-google-map>
+                <div class="clientsDiv"><div>Clients</div><div>{{points.length}}</div></div>
+            </div>
+        </div>
+    </div>
+</div>

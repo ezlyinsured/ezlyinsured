@@ -1,0 +1,129 @@
+@media (min-width: 500px) {
+  /* CSS that should be displayed if width is equal to or less than 800px goes here */
+
+    .headerLogo{
+        height: 100%;
+        float: left;
+        padding: 20px;
+    }
+
+    .sebm-google-map-container {
+        height: 350px;
+        width: 100%;
+        margin: 50px;
+        border-radius: 20px;
+	   -webkit-border-radius: 20px;
+	   -moz-border-radius: 20px;
+        padding: 50px;
+    }
+    .mainDiv {
+        background-color:beige;
+        height: 100%;
+        width: 100%;
+    }
+    .sideMenuBar{
+        width: 50px;
+        height: 100%;    
+        background-color: blue;
+        float: left;
+    }
+        .userInfo{
+        border-left-color: white !important;
+        border-left-style: solid !important; 
+        border-left: 1px;  
+        float: right;
+        height: 100%;
+        width: 200px;
+    
+    }  
+       .userDetail{
+        margin: 10px;
+        font-family: Roboto,sans-serif;
+        float: left;
+        color: white;
+        text-align: center;
+        font-size: 1em;
+        line-height: 1.1em;
+    }
+ 
+ 
+    .userLogout{
+        font-size:0.8em;
+        color: aqua;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+@media (max-width: 500px) {
+    .userInfo{
+        border-left-color: white !important;
+        border-left-style: solid !important; 
+        border-left: 1px;  
+        float: right;
+        height: 100%;
+        width: 150px;
+    
+    }   
+      .headerLogo{
+        height: 100%;
+        float: left;
+        padding: 20px;
+        width: 100px;
+    }
+   .userDetail{
+        margin: 10px;
+        font-family: Roboto,sans-serif;
+        float: left;
+        color: white;
+        text-align: center;
+        font-size: 0.8em;
+        line-height: 1.1em;
+    }
+ 
+ 
+    .userLogout{
+        font-size:0.6em;
+        color: aqua;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+ 
+}
+    .imageOnCircle{
+        float: left;
+        width: 40px;
+	   height: 40px;
+	   border-radius: 20px;
+	   -webkit-border-radius: 20px;
+	   -moz-border-radius: 20px;
+        margin-top: 5px;
+        margin-left: 10px;
+    }
+
+    .mainHeaderAgentPortal{
+        height: 50px;
+        background-color:  #3073B9;
+    }
+    .headerMenu{
+        border-right-color: white !important;
+        border-right-style: solid !important; 
+        border-right: 1px;  
+        width: 50px;
+        height: 100%;
+        float: left;
+        padding-left: 12px;
+        cursor: pointer;
+        padding-top: 14px;
+    }
+.divMap{
+    width: 70%;
+    text-align: center;
+    padding: 50px;
+    padding-left: 150px;
+}
+.clientsDiv{
+    font-family: Roboto,sans-serif;
+    align-content: center;
+    font-size: 3em;
+    color: #146DAF;
+}

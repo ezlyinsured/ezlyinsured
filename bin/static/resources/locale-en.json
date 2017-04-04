@@ -1,0 +1,23 @@
+{
+    "TITLE": "Angular 2 Locale",
+    "CHANGE_COUNTRY": "Change Country",
+    "policy":{
+    	"labels":{
+    		"lbl": "lbl1"
+    	},
+    	"errors":{
+    		"err1": "err"
+    	},
+    	"actions":{
+    		"quick_quote_btn": "GET QUICK QUOTE"
+    	}
+    },
+    "common":{
+    	"labels":{
+    		"111": "lbl"
+    	},
+    	"errors":{
+    		"err2": "err2"
+    	}
+    }
+}
